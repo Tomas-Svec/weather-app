@@ -15,12 +15,12 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 export const getDeviceToken = async (): Promise<string | null> => {
-    try {
-      const token = await getToken(messaging, { vapidKey: environment.firebase.vapidKey });
-      console.log('Token del dispositivo:', token);
-      return token; // Devuelve el token si todo va bien
-    } catch (error) {
-      console.error('Error al obtener el token:', error);
-      return null; // Devuelve null en caso de error
-    }
-  };
+  try {
+    const token = await getToken(messaging, { vapidKey: environment.firebase.vapidKey });
+    console.log('Token del dispositivo:', token);
+    return token; // Devuelve el token si todo va bien
+  } catch (error) {
+    console.error('Error al obtener el token:', error);
+    return null; // Devuelve null en caso de error
+  }
+};

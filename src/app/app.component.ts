@@ -4,6 +4,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { getDeviceToken } from './firebase-config';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
@@ -17,21 +18,26 @@ export class AppComponent {
   }
 
   async initializeApp() {
-    // Solicitar permisos para notificaciones push
-    await PushNotifications.requestPermissions().then((result) => {
-      if (result.receive === 'granted') {
-        PushNotifications.register();
-      } else {
-        console.log('Permiso denegado');
-      }
-    });
+    // Verificar si estamos en un dispositivo nativo
+    if (Capacitor.isNativePlatform()) {
+      // Solicitar permisos para notificaciones push
+      await PushNotifications.requestPermissions().then((result) => {
+        if (result.receive === 'granted') {
+          PushNotifications.register();
+        } else {
+          console.log('Permiso denegado');
+        }
+      });
 
-    // Obtener el token del dispositivo
-    const token = await getDeviceToken();
-    if (token) {
-      console.log('Token registrado:', token);
+      // Obtener el token del dispositivo
+      const token = await getDeviceToken();
+      if (token) {
+        console.log('Token registrado:', token);
+      } else {
+        console.error('No se pudo obtener el token del dispositivo.');
+      }
     } else {
-      console.error('No se pudo obtener el token del dispositivo.');
+      console.warn('PushNotifications no está disponible en la plataforma web.');
     }
   }
 }
