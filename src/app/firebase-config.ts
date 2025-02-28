@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken } from 'firebase/messaging';
 import { environment } from '../environments/environment';
+import { initializeApp } from 'firebase/app'; // Importa initializeApp desde 'firebase/app'
+import { getMessaging, getToken } from 'firebase/messaging'; // Importa getMessaging y getToken desde 'firebase/messaging'
 
 const firebaseConfig = {
   apiKey: environment.firebase.apiKey,
